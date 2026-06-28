@@ -32,7 +32,9 @@ export function AppLayout({ children, hideSidebar = false }: AppLayoutProps) {
     } else {
       root.dir = "ltr";
     }
-  }, [isDark, settings.language]);
+    const fontSizeMap = { small: "14px", medium: "16px", large: "18px" };
+    root.style.fontSize = fontSizeMap[settings.fontSize ?? "medium"];
+  }, [isDark, settings.language, settings.fontSize]);
 
   const navItems = [
     { href: "/", icon: Home, label: settings.language === "ar" ? "الرئيسية" : "Home" },

@@ -31,6 +31,11 @@ export interface AppSettings {
   language: 'ar' | 'en';
   learningStyle: 'visual' | 'practical' | 'theoretical' | 'step-by-step';
   theme: 'light' | 'dark' | 'auto';
+  fontSize: 'small' | 'medium' | 'large';
+}
+
+export interface ArchivedSession extends Session {
+  endTime: number;
 }
 
 export const SUBJECT_NAMES_AR: Record<Subject, string> = {

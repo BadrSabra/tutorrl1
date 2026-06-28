@@ -3,14 +3,13 @@ import { useLocation } from "wouter";
 import { useSendChat, useSubmitFeedback } from "@workspace/api-client-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { 
-  Send, Bot, User, ArrowLeft, ArrowRight, Loader2, ThumbsUp, ThumbsDown, GraduationCap
+  Send, Bot, User, ArrowLeft, ArrowRight, Loader2, ThumbsUp, ThumbsDown, GraduationCap, PlusCircle
 } from "lucide-react";
 import { useLocalStorage } from "@/hooks/use-local-storage";
 import { 
-  Subject, Grade, AppSettings, Session, Message,
+  Subject, Grade, AppSettings, Session, Message, ArchivedSession,
   SUBJECT_NAMES_AR, GRADE_NAMES_AR, LEVEL_NAMES_AR 
 } from "@/lib/types";
 
@@ -22,9 +21,11 @@ export default function Chat() {
   const [settings] = useLocalStorage<AppSettings>("tutorrl_settings", {
     language: "ar",
     learningStyle: "step-by-step",
-    theme: "light"
+    theme: "light",
+    fontSize: "medium"
   });
   const [session, setSession] = useLocalStorage<Session | null>("tutorrl_current_session", null);
+  const [sessionHistory, setSessionHistory] = useLocalStorage<ArchivedSession[]>("tutorrl_session_history", []);
 
   const isAr = settings.language === "ar";
   const ArrowIcon = isAr ? ArrowLeft : ArrowRight;
@@ -69,6 +70,35 @@ export default function Chat() {
   useEffect(() => {
     scrollToBottom();
   }, [session?.messages, sendChatMutation.isPending]);
+
+  const archiveCurrentSession = () => {
+    if (session && session.messages.length > 1) {
+      const archived: ArchivedSession = { ...session, endTime: Date.now() };
+      setSessionHistory(prev => [archived, ...(prev || [])].slice(0, 20));
+    }
+  };
+
+  const handleNewSession = () => {
+    archiveCurrentSession();
+    if (currentSubject && currentGrade) {
+      const welcomeContent = isAr 
+        ? `مرحباً بك! أنا معلم ${SUBJECT_NAMES_AR[currentSubject]} الخاص بك. كيف يمكنني مساعدتك اليوم؟`
+        : `Hello! I'm your ${currentSubject} tutor. How can I help you today?`;
+      setSession({
+        id: crypto.randomUUID(),
+        subject: currentSubject,
+        grade: currentGrade,
+        level: profile?.level || "beginner",
+        startTime: Date.now(),
+        messages: [{
+          id: crypto.randomUUID(),
+          role: "assistant",
+          content: welcomeContent,
+          timestamp: Date.now()
+        }]
+      });
+    }
+  };
 
   const handleSend = () => {
     if (!input.trim() || !session || !currentSubject || !currentGrade) return;
@@ -154,6 +184,8 @@ export default function Chat() {
 
   if (!session || !currentSubject || !currentGrade) return null;
 
+  const userMessageCount = session.messages.filter(m => m.role === "user").length;
+
   return (
     <div className="flex flex-col h-[100dvh] bg-background max-w-4xl mx-auto w-full shadow-xl md:border-x">
       {/* Header */}
@@ -161,22 +193,35 @@ export default function Chat() {
         <Button variant="ghost" size="icon" onClick={() => setLocation("/subjects")}>
           <ArrowIcon className="w-5 h-5" />
         </Button>
-        <div className="flex items-center gap-3">
-          <Avatar className="w-10 h-10 border bg-primary/10">
+        <div className="flex items-center gap-3 flex-1 min-w-0">
+          <Avatar className="w-10 h-10 border bg-primary/10 flex-shrink-0">
             <AvatarFallback className="bg-transparent text-primary">
               <Bot className="w-6 h-6" />
             </AvatarFallback>
           </Avatar>
-          <div>
-            <h1 className="font-semibold leading-tight">
+          <div className="min-w-0">
+            <h1 className="font-semibold leading-tight truncate">
               {isAr ? `معلم ${SUBJECT_NAMES_AR[currentSubject]}` : `${currentSubject} Tutor`}
             </h1>
             <p className="text-xs text-muted-foreground flex items-center gap-1">
               <GraduationCap className="w-3 h-3" />
               {isAr ? GRADE_NAMES_AR[currentGrade] : currentGrade} • {isAr ? LEVEL_NAMES_AR[profile?.level as keyof typeof LEVEL_NAMES_AR || 'beginner'] : (profile?.level || 'beginner')}
+              {userMessageCount > 0 && (
+                <span className="ms-1 text-muted-foreground/60">• {userMessageCount} {isAr ? "رسائل" : "msgs"}</span>
+              )}
             </p>
           </div>
         </div>
+        <Button 
+          variant="outline" 
+          size="sm" 
+          className="flex-shrink-0 gap-1.5 text-xs"
+          onClick={handleNewSession}
+          title={isAr ? "جلسة جديدة" : "New Session"}
+        >
+          <PlusCircle className="w-4 h-4" />
+          <span className="hidden sm:inline">{isAr ? "جلسة جديدة" : "New Session"}</span>
+        </Button>
       </header>
 
       {/* Messages */}

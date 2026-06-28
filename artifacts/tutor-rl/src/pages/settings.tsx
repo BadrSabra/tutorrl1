@@ -1,17 +1,17 @@
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useLocalStorage } from "@/hooks/use-local-storage";
 import { AppSettings, Level, LEVEL_NAMES_AR } from "@/lib/types";
-import { Settings2, Globe, Palette, Brain, Target } from "lucide-react";
+import { Settings2, Globe, Palette, Brain, Target, Type } from "lucide-react";
 
 export default function Settings() {
   const [settings, setSettings] = useLocalStorage<AppSettings>("tutorrl_settings", {
     language: "ar",
     learningStyle: "step-by-step",
-    theme: "light"
+    theme: "light",
+    fontSize: "medium"
   });
 
   const [profile, setProfile] = useLocalStorage<any>("tutorrl_student_profile", null);
@@ -97,6 +97,44 @@ export default function Settings() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-lg">
+              <Type className="w-5 h-5 text-indigo-500" />
+              {isAr ? "حجم الخط" : "Font Size"}
+            </CardTitle>
+            <CardDescription>
+              {isAr ? "اضبط حجم النص في جميع أنحاء التطبيق" : "Adjust text size throughout the app"}
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <RadioGroup
+              value={settings.fontSize ?? "medium"}
+              onValueChange={(v: "small" | "medium" | "large") => updateSetting("fontSize", v)}
+              className="grid grid-cols-3 gap-4"
+            >
+              {[
+                { value: "small", label: isAr ? "صغير" : "Small", preview: "أ" },
+                { value: "medium", label: isAr ? "متوسط" : "Medium", preview: "أ" },
+                { value: "large", label: isAr ? "كبير" : "Large", preview: "أ" },
+              ].map(opt => (
+                <div key={opt.value}>
+                  <RadioGroupItem value={opt.value} id={`font-${opt.value}`} className="peer sr-only" />
+                  <Label
+                    htmlFor={`font-${opt.value}`}
+                    className="flex flex-col items-center gap-2 rounded-xl border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary cursor-pointer text-center"
+                  >
+                    <span className={opt.value === "small" ? "text-sm" : opt.value === "large" ? "text-2xl" : "text-lg"}>
+                      {opt.preview}
+                    </span>
+                    <span className="text-sm">{opt.label}</span>
+                  </Label>
+                </div>
+              ))}
+            </RadioGroup>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-lg">
               <Brain className="w-5 h-5 text-amber-500" />
               {isAr ? "أسلوب التعلم" : "Learning Style"}
             </CardTitle>
@@ -132,7 +170,7 @@ export default function Settings() {
               {isAr ? "تغيير مستواك يدوياً بدون اختبار تحديد مستوى" : "Manually change your level without a placement test"}
             </CardDescription>
           </CardHeader>
-          <CardContent className="flex items-center justify-between">
+          <CardContent>
             <Select 
               value={profile?.level || "beginner"} 
               onValueChange={(v: Level) => setProfile((prev: any) => ({ ...prev, level: v }))}
