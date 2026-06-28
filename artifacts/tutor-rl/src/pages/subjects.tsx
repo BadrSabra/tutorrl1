@@ -47,7 +47,7 @@ export default function Subjects() {
   };
 
   return (
-    <div className="p-6 md:p-8 max-w-4xl mx-auto w-full animate-in fade-in duration-500">
+    <div className="p-6 md:p-8 pb-24 md:pb-8 max-w-4xl mx-auto w-full animate-in fade-in duration-500">
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-2">
           {isAr ? "ماذا سندرس اليوم؟" : "What are we studying today?"}

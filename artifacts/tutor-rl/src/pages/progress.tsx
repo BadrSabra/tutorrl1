@@ -61,7 +61,7 @@ export default function Progress() {
   }
 
   return (
-    <div className="p-6 md:p-8 max-w-4xl mx-auto w-full space-y-8 animate-in fade-in duration-500">
+    <div className="p-6 md:p-8 pb-24 md:pb-8 max-w-4xl mx-auto w-full space-y-8 animate-in fade-in duration-500">
       <div>
         <h1 className="text-3xl font-bold mb-2">
           {isAr ? "مستوى التقدم" : "Progress"}

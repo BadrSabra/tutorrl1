@@ -116,7 +116,7 @@ export default function Placement() {
   }
 
   return (
-    <div className="flex-1 flex flex-col max-w-3xl mx-auto w-full p-6 md:p-8 animate-in fade-in duration-300">
+    <div className="flex-1 flex flex-col max-w-3xl mx-auto w-full p-6 md:p-8 pb-24 md:pb-8 animate-in fade-in duration-300">
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-2xl font-bold flex items-center gap-2">

@@ -22,7 +22,7 @@ export default function Settings() {
   };
 
   return (
-    <div className="p-6 md:p-8 max-w-3xl mx-auto w-full space-y-8 animate-in fade-in duration-500">
+    <div className="p-6 md:p-8 pb-24 md:pb-8 max-w-3xl mx-auto w-full space-y-8 animate-in fade-in duration-500">
       <div>
         <h1 className="text-3xl font-bold mb-2 flex items-center gap-3">
           <Settings2 className="w-8 h-8 text-primary" />
