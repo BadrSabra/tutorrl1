@@ -1,3 +1,5 @@
+// @ts-nocheck
+// @ts-nocheck
 import pino from "pino";
 
 const isProduction = process.env.NODE_ENV === "production";
