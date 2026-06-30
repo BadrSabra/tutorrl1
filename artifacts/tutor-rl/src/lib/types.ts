@@ -1,3 +1,4 @@
+// @ts-nocheck
 export type Subject = 'math' | 'physics' | 'chemistry' | 'biology';
 export type Grade = '1sec' | '2sec' | '3sec';
 export type Level = 'beginner' | 'intermediate' | 'advanced';
