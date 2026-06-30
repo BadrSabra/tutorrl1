@@ -1,0 +1,70 @@
+أنت Senior Software Architect مكلّف بمهمة واحدة فقط: استخراج المعلومات التقنية والتجارية الحقيقية لهذا المشروع وتنسيقها كـ JSON جاهز للاستخدام في Portfolio شخصي لـ Full Stack Developer.
+
+## تعليمات مهمة:
+- اقرأ الكود مباشرة — لا تخترع معلومات
+- كل رقم (جداول، endpoints، مكونات) يجب أن يكون مثبتاً من الكود الفعلي
+- استخدم التقنيات الفعلية فقط — لا تذكر ما في package.json إذا لم يُستخدم فعلاً
+- اكتب المحتوى النثري بالإنجليزية بأسلوب Developer يفخر بعمله
+- لا تبالغ، لا تُهوّن — صِف الواقع الهندسي بدقة
+
+## المعلومات المطلوبة (JSON):
+
+{
+  "id": "slug-lowercase-hyphenated",
+  "slug": "نفس الـ id",
+  "title": "اسم المشروع",
+  "tagline": "جملة وصفية واحدة — تقنية + هدف",
+  "description": "فقرة قصيرة 2-3 جمل: ما هو، من يستخدمه، ما القيمة",
+  "liveUrl": "رابط حي أو null",
+  "badges": ["3-5 تقنيات أساسية تظهر كـ tags"],
+  "features": [
+    "6-8 features حقيقية موثقة — جمل محددة بتقنياتها",
+    "'Real-time order tracking via Socket.IO' أفضل من 'Real-time features'"
+  ],
+  "businessValue": "فقرة: ما المشكلة التي يحلها في العالم الحقيقي؟ من المستفيد؟",
+  "stats": [
+    { "label": "DB Tables", "value": "العدد الفعلي" },
+    { "label": "API Endpoints", "value": "العدد+" },
+    { "label": "User Roles", "value": "العدد" },
+    { "label": "تسمية رابعة", "value": "قيمة" }
+  ],
+  "caseStudy": {
+    "overview": "فقرة 3-4 جمل: ما هو المشروع، نطاقه الكامل",
+    "problem": "فقرة 3-4 جمل: المشكلة الحقيقية + السياق + لماذا مؤلمة",
+    "solution": "فقرة 3-4 جمل: كيف يحلها + القرارات التصميمية الكبرى",
+    "architecture": "فقرة 3-4 جمل: Pattern المعماري + كيف تتصل الطبقات",
+    "architectureLayers": [
+      { "layer": "Client (React SPA)", "tech": "التقنيات بالضبط" },
+      { "layer": "Middleware", "tech": "..." },
+      { "layer": "API Layer", "tech": "..." },
+      { "layer": "Data Access", "tech": "..." },
+      { "layer": "Database", "tech": "..." }
+    ],
+    "roles": ["كل role حقيقي مثبت من الكود"],
+    "dbTables": 0,
+    "apiEndpoints": 0,
+    "keyFeatures": [
+      "8-12 feature مفصّل — كل سطر: الوظيفة + التقنية المستخدمة",
+      "'Wallet ledger — every debit/credit is an immutable PostgreSQL record'"
+    ],
+    "techStack": ["React 18", "TypeScript 5.x", "كل تقنية مستخدمة فعلاً"],
+    "techDetails": [
+      { "category": "Frontend", "items": ["..."] },
+      { "category": "Backend", "items": ["..."] },
+      { "category": "Database & ORM", "items": ["..."] },
+      { "category": "Auth & Security", "items": ["..."] }
+    ],
+    "challenges": "فقرة 3-4 جمل: أصعب مشكلة هندسية + القرار + لماذا",
+    "results": "فقرة 2-3 جمل: ما تحقق فعلاً في production",
+    "lessonsLearned": "فقرة 2-3 جمل: أهم 2-3 دروس هندسية حقيقية",
+    "futureImprovements": "فقرة 2-3 جمل: التحسينات التالية + تقنياتها"
+  }
+}
+
+## تحقق قبل الإرسال:
+- عدد الجداول محسوب من schema الفعلي؟
+- عدد الـ endpoints محسوب من routes الفعلية؟
+- التقنيات مستخدمة فعلاً وليس فقط في package.json؟
+- الـ JSON صالح ويمكن نسخه مباشرة؟
+
+أرجع JSON فقط — بدون شرح قبله أو بعده.
